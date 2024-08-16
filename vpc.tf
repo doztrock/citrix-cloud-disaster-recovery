@@ -46,3 +46,19 @@ module "vpc-dr" {
   enable_dns_support   = true
 
 }
+
+resource "aws_vpc_peering_connection" "main-dr" {
+  provider    = aws.dr
+  vpc_id      = module.vpc-dr.vpc_id
+  peer_vpc_id = module.vpc-main.vpc_id
+  peer_region = "us-east-1"
+  depends_on = [
+    module.vpc-main, module.vpc-dr
+  ]
+}
+
+resource "aws_vpc_peering_connection_accepter" "main-dr" {
+  provider                  = aws.main
+  vpc_peering_connection_id = aws_vpc_peering_connection.main-dr.id
+  auto_accept               = true
+}
