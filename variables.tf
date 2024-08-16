@@ -8,11 +8,6 @@ variable "AWS_SECRET_ACCESS_KEY" {
   nullable = false
 }
 
-variable "AWS_REGION" {
-  type     = string
-  nullable = false
-}
-
 variable "INGRESS_WITH_CIDR_BLOCKS" {
   type = list(object({
     cidr_blocks = string
