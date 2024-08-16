@@ -62,3 +62,35 @@ resource "aws_vpc_peering_connection_accepter" "main-dr" {
   vpc_peering_connection_id = aws_vpc_peering_connection.main-dr.id
   auto_accept               = true
 }
+
+resource "aws_route" "main-private-dr" {
+  provider                  = aws.main
+  count                     = length(module.vpc-main.private_route_table_ids)
+  route_table_id            = module.vpc-main.private_route_table_ids[count.index]
+  destination_cidr_block    = module.vpc-dr.vpc_cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.main-dr.id
+}
+
+resource "aws_route" "main-public-dr" {
+  provider                  = aws.main
+  count                     = length(module.vpc-main.public_route_table_ids)
+  route_table_id            = module.vpc-main.public_route_table_ids[count.index]
+  destination_cidr_block    = module.vpc-dr.vpc_cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.main-dr.id
+}
+
+resource "aws_route" "dr-private-main" {
+  provider                  = aws.dr
+  count                     = length(module.vpc-dr.private_route_table_ids)
+  route_table_id            = module.vpc-dr.private_route_table_ids[count.index]
+  destination_cidr_block    = module.vpc-main.vpc_cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.main-dr.id
+}
+
+resource "aws_route" "dr-public-main" {
+  provider                  = aws.dr
+  count                     = length(module.vpc-dr.public_route_table_ids)
+  route_table_id            = module.vpc-dr.public_route_table_ids[count.index]
+  destination_cidr_block    = module.vpc-main.vpc_cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.main-dr.id
+}
