@@ -15,3 +15,8 @@ variable "INGRESS_WITH_CIDR_BLOCKS" {
   }))
   default = []
 }
+
+variable "PASSWORD" {
+  type      = string
+  sensitive = true
+}

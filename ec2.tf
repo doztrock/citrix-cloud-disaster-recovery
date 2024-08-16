@@ -70,11 +70,17 @@ module "ec2-main-dc" {
   version = "5.6.1"
 
   name          = "DCPD01"
-  instance_type = "t2.micro"
+  instance_type = "t3.medium"
   ami           = data.aws_ami.ami-main-windows.id
 
   key_name                = module.key-pair-main.key_pair_name
   disable_api_termination = true
+
+  user_data = templatefile("${path.module}/script/userdata.ps1", {
+    HOSTNAME = "DCPD01",
+    PASSWORD = var.PASSWORD
+  })
+  user_data_replace_on_change = true
 
   subnet_id              = element(module.vpc-main.public_subnets, 0)
   vpc_security_group_ids = [module.sg-main.security_group_id]
@@ -91,11 +97,17 @@ module "ec2-dr-dc" {
   version = "5.6.1"
 
   name          = "DCPD51"
-  instance_type = "t2.micro"
+  instance_type = "t3.medium"
   ami           = data.aws_ami.ami-dr-windows.id
 
   key_name                = module.key-pair-dr.key_pair_name
   disable_api_termination = true
+
+  user_data = templatefile("${path.module}/script/userdata.ps1", {
+    HOSTNAME = "DCPD51",
+    PASSWORD = var.PASSWORD
+  })
+  user_data_replace_on_change = true
 
   subnet_id              = element(module.vpc-dr.public_subnets, 0)
   vpc_security_group_ids = [module.sg-dr.security_group_id]
