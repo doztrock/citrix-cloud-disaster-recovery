@@ -60,7 +60,7 @@ module "key-pair-dr" {
 
 }
 
-module "ec2-main-dc01" {
+module "ec2-main-dc" {
 
   providers = {
     aws = aws.main
@@ -81,7 +81,7 @@ module "ec2-main-dc01" {
 
 }
 
-module "ec2-dr-dc01" {
+module "ec2-dr-dc" {
 
   providers = {
     aws = aws.dr
