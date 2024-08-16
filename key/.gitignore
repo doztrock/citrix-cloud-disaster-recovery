@@ -1,0 +1,2 @@
+# Ignore sensitive PEM files (keys, certs, etc.)
+*.pem
