@@ -25,6 +25,7 @@ module "ec2-main-dc" {
   instance_type = "t3.medium"
   ami           = data.aws_ami.ami-main-windows.id
 
+  iam_instance_profile    = aws_iam_instance_profile.main.name
   disable_api_termination = true
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
@@ -51,6 +52,7 @@ module "ec2-dr-dc" {
   instance_type = "t3.medium"
   ami           = data.aws_ami.ami-dr-windows.id
 
+  iam_instance_profile    = aws_iam_instance_profile.dr.name
   disable_api_termination = true
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
