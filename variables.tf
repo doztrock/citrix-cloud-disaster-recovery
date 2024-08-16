@@ -12,3 +12,11 @@ variable "AWS_REGION" {
   type     = string
   nullable = false
 }
+
+variable "INGRESS_WITH_CIDR_BLOCKS" {
+  type = list(object({
+    cidr_blocks = string
+    rule        = string
+  }))
+  default = []
+}
