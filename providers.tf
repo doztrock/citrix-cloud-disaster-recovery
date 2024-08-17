@@ -7,6 +7,10 @@ terraform {
         aws.main, aws.dr
       ]
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.6.2"
+    }
   }
 }
 
