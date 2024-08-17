@@ -195,7 +195,7 @@ module "sg-main-public" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.1.2"
 
-  name        = "main"
+  name        = "public"
   description = "Allows inbound and outbound traffic to and from the internet"
   vpc_id      = module.vpc-main.vpc_id
 
@@ -298,7 +298,7 @@ module "sg-dr-public" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.1.2"
 
-  name        = "dr"
+  name        = "public"
   description = "Allows inbound and outbound traffic to and from the internet"
   vpc_id      = module.vpc-dr.vpc_id
 
