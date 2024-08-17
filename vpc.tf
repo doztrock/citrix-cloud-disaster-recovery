@@ -1,3 +1,11 @@
+data "aws_region" "main" {
+  provider = aws.main
+}
+
+data "aws_region" "dr" {
+  provider = aws.dr
+}
+
 locals {
   cidr-main = "10.10.0.0/16"
   azs-main  = ["us-east-1a", "us-east-1b"]
@@ -119,6 +127,28 @@ module "sg-main" {
 
 }
 
+module "sg-main-ssm" {
+
+  providers = {
+    aws = aws.main
+  }
+
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "5.1.2"
+
+  name        = "ssm"
+  description = "Allows access to SSM"
+  vpc_id      = module.vpc-main.vpc_id
+
+  ingress_with_cidr_blocks = [
+    {
+      cidr_blocks = module.vpc-main.vpc_cidr_block
+      rule        = "https-443-tcp"
+    }
+  ]
+
+}
+
 module "sg-dr" {
 
   providers = {
@@ -139,4 +169,34 @@ module "sg-dr" {
 
   egress_rules = ["all-all"]
 
+}
+
+resource "aws_vpc_endpoint" "main-ssm" {
+  provider            = aws.main
+  vpc_id              = module.vpc-main.vpc_id
+  service_name        = "com.amazonaws.${data.aws_region.main.name}.ssm"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc-main.private_subnets
+  security_group_ids  = [module.sg-main-ssm.security_group_id]
+  private_dns_enabled = true
+}
+
+resource "aws_vpc_endpoint" "main-ec2messages" {
+  provider            = aws.main
+  vpc_id              = module.vpc-main.vpc_id
+  service_name        = "com.amazonaws.${data.aws_region.main.name}.ec2messages"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc-main.private_subnets
+  security_group_ids  = [module.sg-main-ssm.security_group_id]
+  private_dns_enabled = true
+}
+
+resource "aws_vpc_endpoint" "main-ssmmessages" {
+  provider            = aws.main
+  vpc_id              = module.vpc-main.vpc_id
+  service_name        = "com.amazonaws.${data.aws_region.main.name}.ssmmessages"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc-main.private_subnets
+  security_group_ids  = [module.sg-main-ssm.security_group_id]
+  private_dns_enabled = true
 }
