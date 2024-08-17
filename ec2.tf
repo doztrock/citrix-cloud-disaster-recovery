@@ -33,7 +33,7 @@ module "ec2-main-dc" {
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
     HOSTNAME = "DCPD01",
-    PASSWORD = var.PASSWORD
+    PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
 
@@ -67,7 +67,7 @@ module "ec2-main-cc" {
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
     HOSTNAME = "CCPD01",
-    PASSWORD = var.PASSWORD
+    PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
 
@@ -101,7 +101,7 @@ module "ec2-main-gi" {
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
     HOSTNAME = "GIPD01",
-    PASSWORD = var.PASSWORD
+    PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
 
@@ -134,7 +134,7 @@ module "ec2-dr-dc" {
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
     HOSTNAME = "DCPD51",
-    PASSWORD = var.PASSWORD
+    PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
 
@@ -168,7 +168,7 @@ module "ec2-dr-cc" {
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
     HOSTNAME = "CCPD51",
-    PASSWORD = var.PASSWORD
+    PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
 

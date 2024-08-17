@@ -16,11 +16,6 @@ variable "INGRESS_WITH_CIDR_BLOCKS" {
   default = []
 }
 
-variable "PASSWORD" {
-  type      = string
-  sensitive = true
-}
-
 variable "DOMAIN_NAME" {
   type    = string
   default = "homelab.corp"
@@ -28,5 +23,10 @@ variable "DOMAIN_NAME" {
 
 variable "DOMAIN_NETBIOS_NAME" {
   type    = string
-  default = "HOME"
+  default = "HOMELAB"
+}
+
+variable "ADMINISTRATOR_PASSWORD" {
+  type      = string
+  sensitive = true
 }
