@@ -33,10 +33,6 @@ module "vpc-main" {
   enable_dns_support      = true
   map_public_ip_on_launch = true
 
-  enable_dhcp_options              = true
-  dhcp_options_domain_name         = var.DOMAIN_NAME
-  dhcp_options_domain_name_servers = [module.ec2-main-dc.private_ip]
-
 }
 
 module "vpc-dr" {
@@ -58,10 +54,6 @@ module "vpc-dr" {
   enable_dns_hostnames    = true
   enable_dns_support      = true
   map_public_ip_on_launch = true
-
-  enable_dhcp_options              = true
-  dhcp_options_domain_name         = var.DOMAIN_NAME
-  dhcp_options_domain_name_servers = [module.ec2-main-dc.private_ip]
 
 }
 
