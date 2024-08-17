@@ -20,3 +20,13 @@ variable "PASSWORD" {
   type      = string
   sensitive = true
 }
+
+variable "DOMAIN_NAME" {
+  type    = string
+  default = "homelab.corp"
+}
+
+variable "DOMAIN_NETBIOS_NAME" {
+  type    = string
+  default = "HOME"
+}
