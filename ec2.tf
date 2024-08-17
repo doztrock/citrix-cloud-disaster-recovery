@@ -1,11 +1,11 @@
-data "aws_ami" "ami-main-windows" {
+data "aws_ami" "main-windows" {
   provider    = aws.main
   most_recent = true
   name_regex  = "^Windows_Server-2019-English-Full-Base"
   owners      = ["amazon"]
 }
 
-data "aws_ami" "ami-dr-windows" {
+data "aws_ami" "dr-windows" {
   provider    = aws.dr
   most_recent = true
   name_regex  = "^Windows_Server-2019-English-Full-Base"
@@ -26,7 +26,7 @@ module "ec2-main-dc" {
 
   name          = "DCPD01"
   instance_type = "t3.medium"
-  ami           = data.aws_ami.ami-main-windows.id
+  ami           = data.aws_ami.main-windows.id
 
   iam_instance_profile    = aws_iam_instance_profile.main.name
   disable_api_termination = true
@@ -60,7 +60,7 @@ module "ec2-main-cc" {
 
   name          = "CCPD01"
   instance_type = "t3.medium"
-  ami           = data.aws_ami.ami-main-windows.id
+  ami           = data.aws_ami.main-windows.id
 
   iam_instance_profile    = aws_iam_instance_profile.main.name
   disable_api_termination = true
@@ -94,7 +94,7 @@ module "ec2-main-gi" {
 
   name          = "GIPD01"
   instance_type = "t3.medium"
-  ami           = data.aws_ami.ami-main-windows.id
+  ami           = data.aws_ami.main-windows.id
 
   iam_instance_profile    = aws_iam_instance_profile.main.name
   disable_api_termination = true
@@ -127,7 +127,7 @@ module "ec2-dr-dc" {
 
   name          = "DCPD51"
   instance_type = "t3.medium"
-  ami           = data.aws_ami.ami-dr-windows.id
+  ami           = data.aws_ami.dr-windows.id
 
   iam_instance_profile    = aws_iam_instance_profile.dr.name
   disable_api_termination = true
@@ -161,7 +161,7 @@ module "ec2-dr-cc" {
 
   name          = "CCPD51"
   instance_type = "t3.medium"
-  ami           = data.aws_ami.ami-dr-windows.id
+  ami           = data.aws_ami.dr-windows.id
 
   iam_instance_profile    = aws_iam_instance_profile.dr.name
   disable_api_termination = true

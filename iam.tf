@@ -1,4 +1,4 @@
-resource "aws_iam_role" "main" {
+resource "aws_iam_role" "main-ec2" {
 
   provider = aws.main
 
@@ -22,10 +22,10 @@ resource "aws_iam_role" "main" {
 resource "aws_iam_instance_profile" "main" {
   provider = aws.main
   name     = "instance-profile-main"
-  role     = aws_iam_role.main.name
+  role     = aws_iam_role.main-ec2.name
 }
 
-resource "aws_iam_role" "dr" {
+resource "aws_iam_role" "dr-ec2" {
 
   provider = aws.dr
 
@@ -49,5 +49,5 @@ resource "aws_iam_role" "dr" {
 resource "aws_iam_instance_profile" "dr" {
   provider = aws.dr
   name     = "instance-profile-dr"
-  role     = aws_iam_role.dr.name
+  role     = aws_iam_role.dr-ec2.name
 }
