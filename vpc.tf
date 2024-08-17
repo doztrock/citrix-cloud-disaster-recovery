@@ -105,7 +105,7 @@ resource "aws_route" "dr-public-main" {
   vpc_peering_connection_id = aws_vpc_peering_connection.main-dr.id
 }
 
-module "sg-main" {
+module "sg-main-private" {
 
   providers = {
     aws = aws.main
@@ -114,16 +114,31 @@ module "sg-main" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.1.2"
 
-  name        = "main"
-  description = "Allows access to the machines"
+  name        = "private"
+  description = "Allows access to the resources on both networks"
   vpc_id      = module.vpc-main.vpc_id
 
-  ingress_with_cidr_blocks = [for ingress in var.INGRESS_WITH_CIDR_BLOCKS : {
-    cidr_blocks = ingress.cidr_blocks
-    rule        = ingress.rule
-  }]
+  ingress_with_cidr_blocks = [
+    {
+      cidr_blocks = module.vpc-main.vpc_cidr_block
+      rule        = "all-all"
+    },
+    {
+      cidr_blocks = module.vpc-dr.vpc_cidr_block
+      rule        = "all-all"
+    }
+  ]
 
-  egress_rules = ["all-all"]
+  egress_with_cidr_blocks = [
+    {
+      cidr_blocks = module.vpc-main.vpc_cidr_block
+      rule        = "all-all"
+    },
+    {
+      cidr_blocks = module.vpc-dr.vpc_cidr_block
+      rule        = "all-all"
+    }
+  ]
 
 }
 
@@ -137,7 +152,7 @@ module "sg-main-ssm" {
   version = "5.1.2"
 
   name        = "ssm"
-  description = "Allows access to SSM"
+  description = "Allows access to AWS SSM"
   vpc_id      = module.vpc-main.vpc_id
 
   ingress_with_cidr_blocks = [
@@ -149,7 +164,132 @@ module "sg-main-ssm" {
 
 }
 
-module "sg-dr" {
+module "sg-main-ping" {
+
+  providers = {
+    aws = aws.main
+  }
+
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "5.1.2"
+
+  name        = "ping"
+  description = "Allows inbound ICMP"
+  vpc_id      = module.vpc-main.vpc_id
+
+  ingress_with_cidr_blocks = [
+    {
+      cidr_blocks = "0.0.0.0/0"
+      rule        = "all-icmp"
+    }
+  ]
+
+}
+
+module "sg-main-public" {
+
+  providers = {
+    aws = aws.main
+  }
+
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "5.1.2"
+
+  name        = "main"
+  description = "Allows inbound and outbound traffic to and from the internet"
+  vpc_id      = module.vpc-main.vpc_id
+
+  ingress_with_cidr_blocks = [for ingress in var.INGRESS_WITH_CIDR_BLOCKS : {
+    cidr_blocks = ingress.cidr_blocks
+    rule        = ingress.rule
+  }]
+
+  egress_rules = ["all-all"]
+
+}
+
+module "sg-dr-private" {
+
+  providers = {
+    aws = aws.dr
+  }
+
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "5.1.2"
+
+  name        = "private"
+  description = "Allows access to the resources on both networks"
+  vpc_id      = module.vpc-dr.vpc_id
+
+  ingress_with_cidr_blocks = [
+    {
+      cidr_blocks = module.vpc-dr.vpc_cidr_block
+      rule        = "all-all"
+    },
+    {
+      cidr_blocks = module.vpc-dr.vpc_cidr_block
+      rule        = "all-all"
+    }
+  ]
+
+  egress_with_cidr_blocks = [
+    {
+      cidr_blocks = module.vpc-dr.vpc_cidr_block
+      rule        = "all-all"
+    },
+    {
+      cidr_blocks = module.vpc-dr.vpc_cidr_block
+      rule        = "all-all"
+    }
+  ]
+
+}
+
+module "sg-dr-ssm" {
+
+  providers = {
+    aws = aws.dr
+  }
+
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "5.1.2"
+
+  name        = "ssm"
+  description = "Allows access to AWS SSM"
+  vpc_id      = module.vpc-dr.vpc_id
+
+  ingress_with_cidr_blocks = [
+    {
+      cidr_blocks = module.vpc-dr.vpc_cidr_block
+      rule        = "https-443-tcp"
+    }
+  ]
+
+}
+
+module "sg-dr-ping" {
+
+  providers = {
+    aws = aws.dr
+  }
+
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "5.1.2"
+
+  name        = "ping"
+  description = "Allows inbound ICMP"
+  vpc_id      = module.vpc-dr.vpc_id
+
+  ingress_with_cidr_blocks = [
+    {
+      cidr_blocks = "0.0.0.0/0"
+      rule        = "all-icmp"
+    }
+  ]
+
+}
+
+module "sg-dr-public" {
 
   providers = {
     aws = aws.dr
@@ -159,7 +299,7 @@ module "sg-dr" {
   version = "5.1.2"
 
   name        = "dr"
-  description = "Allows access to the machines"
+  description = "Allows inbound and outbound traffic to and from the internet"
   vpc_id      = module.vpc-dr.vpc_id
 
   ingress_with_cidr_blocks = [for ingress in var.INGRESS_WITH_CIDR_BLOCKS : {

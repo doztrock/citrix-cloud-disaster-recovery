@@ -37,8 +37,12 @@ module "ec2-main-dc" {
   })
   user_data_replace_on_change = true
 
-  subnet_id              = element(module.vpc-main.public_subnets, 0)
-  vpc_security_group_ids = [module.sg-main.security_group_id]
+  subnet_id = element(module.vpc-main.public_subnets, 0)
+  vpc_security_group_ids = [
+    module.sg-main-private.security_group_id,
+    module.sg-main-ping.security_group_id,
+    module.sg-main-public.security_group_id
+  ]
 
 }
 
@@ -67,8 +71,12 @@ module "ec2-main-cc" {
   })
   user_data_replace_on_change = true
 
-  subnet_id              = element(module.vpc-main.public_subnets, 1)
-  vpc_security_group_ids = [module.sg-main.security_group_id]
+  subnet_id = element(module.vpc-main.public_subnets, 1)
+  vpc_security_group_ids = [
+    module.sg-main-private.security_group_id,
+    module.sg-main-ping.security_group_id,
+    module.sg-main-public.security_group_id
+  ]
 
 }
 
@@ -97,8 +105,11 @@ module "ec2-main-gi" {
   })
   user_data_replace_on_change = true
 
-  subnet_id              = element(module.vpc-main.private_subnets, 0)
-  vpc_security_group_ids = [module.sg-main.security_group_id, module.sg-main-ssm.security_group_id]
+  subnet_id = element(module.vpc-main.private_subnets, 0)
+  vpc_security_group_ids = [
+    module.sg-main-private.security_group_id,
+    module.sg-main-ssm.security_group_id
+  ]
 
 }
 
@@ -127,8 +138,12 @@ module "ec2-dr-dc" {
   })
   user_data_replace_on_change = true
 
-  subnet_id              = element(module.vpc-dr.public_subnets, 0)
-  vpc_security_group_ids = [module.sg-dr.security_group_id]
+  subnet_id = element(module.vpc-dr.public_subnets, 0)
+  vpc_security_group_ids = [
+    module.sg-dr-private.security_group_id,
+    module.sg-dr-ping.security_group_id,
+    module.sg-dr-public.security_group_id
+  ]
 
 }
 
@@ -157,7 +172,11 @@ module "ec2-dr-cc" {
   })
   user_data_replace_on_change = true
 
-  subnet_id              = element(module.vpc-dr.public_subnets, 1)
-  vpc_security_group_ids = [module.sg-dr.security_group_id]
+  subnet_id = element(module.vpc-dr.public_subnets, 1)
+  vpc_security_group_ids = [
+    module.sg-dr-private.security_group_id,
+    module.sg-dr-ping.security_group_id,
+    module.sg-dr-public.security_group_id
+  ]
 
 }
