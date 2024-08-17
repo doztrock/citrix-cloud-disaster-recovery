@@ -200,3 +200,33 @@ resource "aws_vpc_endpoint" "main-ssmmessages" {
   security_group_ids  = [module.sg-main-ssm.security_group_id]
   private_dns_enabled = true
 }
+
+resource "aws_vpc_endpoint" "dr-ssm" {
+  provider            = aws.dr
+  vpc_id              = module.vpc-dr.vpc_id
+  service_name        = "com.amazonaws.${data.aws_region.dr.name}.ssm"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc-dr.private_subnets
+  security_group_ids  = [module.sg-dr-ssm.security_group_id]
+  private_dns_enabled = true
+}
+
+resource "aws_vpc_endpoint" "dr-ec2messages" {
+  provider            = aws.dr
+  vpc_id              = module.vpc-dr.vpc_id
+  service_name        = "com.amazonaws.${data.aws_region.dr.name}.ec2messages"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc-dr.private_subnets
+  security_group_ids  = [module.sg-dr-ssm.security_group_id]
+  private_dns_enabled = true
+}
+
+resource "aws_vpc_endpoint" "dr-ssmmessages" {
+  provider            = aws.dr
+  vpc_id              = module.vpc-dr.vpc_id
+  service_name        = "com.amazonaws.${data.aws_region.dr.name}.ssmmessages"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc-dr.private_subnets
+  security_group_ids  = [module.sg-dr-ssm.security_group_id]
+  private_dns_enabled = true
+}
