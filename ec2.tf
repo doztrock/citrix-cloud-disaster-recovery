@@ -24,7 +24,7 @@ module "ec2-main-dc" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.6.1"
 
-  name          = "DCPD01"
+  name          = "DCPD01.${var.DOMAIN_NAME}"
   instance_type = "t3.medium"
   ami           = data.aws_ami.main-windows.id
 
@@ -58,7 +58,7 @@ module "ec2-main-cc" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.6.1"
 
-  name          = "CCPD01"
+  name          = "CCPD01.${var.DOMAIN_NAME}"
   instance_type = "t3.medium"
   ami           = data.aws_ami.main-windows.id
 
@@ -92,7 +92,7 @@ module "ec2-main-gi" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.6.1"
 
-  name          = "GIPD01"
+  name          = "GIPD01.${var.DOMAIN_NAME}"
   instance_type = "t3.medium"
   ami           = data.aws_ami.main-windows.id
 
@@ -125,7 +125,7 @@ module "ec2-dr-dc" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.6.1"
 
-  name          = "DCPD51"
+  name          = "DCPD51.${var.DOMAIN_NAME}"
   instance_type = "t3.medium"
   ami           = data.aws_ami.dr-windows.id
 
@@ -159,7 +159,7 @@ module "ec2-dr-cc" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.6.1"
 
-  name          = "CCPD51"
+  name          = "CCPD51.${var.DOMAIN_NAME}"
   instance_type = "t3.medium"
   ami           = data.aws_ami.dr-windows.id
 
