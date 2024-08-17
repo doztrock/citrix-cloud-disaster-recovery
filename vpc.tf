@@ -227,7 +227,7 @@ module "sg-dr-private" {
       rule        = "all-all"
     },
     {
-      cidr_blocks = module.vpc-dr.vpc_cidr_block
+      cidr_blocks = module.vpc-main.vpc_cidr_block
       rule        = "all-all"
     }
   ]
@@ -238,7 +238,7 @@ module "sg-dr-private" {
       rule        = "all-all"
     },
     {
-      cidr_blocks = module.vpc-dr.vpc_cidr_block
+      cidr_blocks = module.vpc-main.vpc_cidr_block
       rule        = "all-all"
     }
   ]
