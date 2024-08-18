@@ -17,8 +17,8 @@ resource "local_file" "join-dr-dc" {
   filename = "${path.module}/script/1-join-dr-dc.ps1"
   content = templatefile("${path.module}/script/template/join.tpl", {
     HOSTNAME            = "DCPD51.${var.DOMAIN_NAME}",
-    SERVER_ADDRESS_1    = module.ec2-dr-dc.private_ip,
-    SERVER_ADDRESS_2    = module.ec2-main-dc.private_ip,
+    SERVER_ADDRESS_1    = module.ec2-main-dc.private_ip,
+    SERVER_ADDRESS_2    = "",
     DOMAIN_NAME         = var.DOMAIN_NAME,
     DOMAIN_NETBIOS_NAME = var.DOMAIN_NETBIOS_NAME,
     JOIN_USERNAME       = "Administrator",
