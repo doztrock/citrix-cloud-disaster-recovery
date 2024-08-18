@@ -37,8 +37,17 @@ resource "local_file" "deploy-dr-dc" {
   })
 }
 
+resource "local_file" "create-sites" {
+  filename = "${path.module}/script/3-create-sites.ps1"
+  content = templatefile("${path.module}/script/template/create-sites.tpl", {
+    HOSTNAME    = "DCPD01.${var.DOMAIN_NAME}",
+    MAIN_SUBNET = module.vpc-main.vpc_cidr_block,
+    DR_SUBNET   = module.vpc-dr.vpc_cidr_block
+  })
+}
+
 resource "local_file" "join-main-cc" {
-  filename = "${path.module}/script/3-join-main-cc.ps1"
+  filename = "${path.module}/script/4-join-main-cc.ps1"
   content = templatefile("${path.module}/script/template/join.tpl", {
     HOSTNAME            = "CCPD01.${var.DOMAIN_NAME}",
     SERVER_ADDRESS      = module.ec2-main-dc.private_ip,
@@ -50,7 +59,7 @@ resource "local_file" "join-main-cc" {
 }
 
 resource "local_file" "join-dr-cc" {
-  filename = "${path.module}/script/4-join-dr-cc.ps1"
+  filename = "${path.module}/script/5-join-dr-cc.ps1"
   content = templatefile("${path.module}/script/template/join.tpl", {
     HOSTNAME            = "CCPD51.${var.DOMAIN_NAME}",
     SERVER_ADDRESS      = module.ec2-main-dc.private_ip,
@@ -62,7 +71,7 @@ resource "local_file" "join-dr-cc" {
 }
 
 resource "local_file" "join-main-gi" {
-  filename = "${path.module}/script/5-join-main-gi.ps1"
+  filename = "${path.module}/script/6-join-main-gi.ps1"
   content = templatefile("${path.module}/script/template/join.tpl", {
     HOSTNAME            = "GIPD01.${var.DOMAIN_NAME}",
     SERVER_ADDRESS      = module.ec2-main-dc.private_ip,
