@@ -3,7 +3,6 @@
 #
 
 Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
-
 Import-Module ADDSDeployment
 
 $DSRMPassword = ConvertTo-SecureString '${DSRM_PASSWORD}' -AsPlainText -Force

@@ -14,3 +14,6 @@ New-ADReplicationSubnet -Name "${MAIN_SUBNET}" -Site "Main"
 New-ADReplicationSubnet -Name "${DR_SUBNET}" -Site "DR"
 
 Remove-ADReplicationSite -Identity "Default-First-Site-Name" -Confirm:$false
+
+New-ADReplicationSiteLink -Name "Main-DR" -SitesIncluded "Main", "DR" -Cost 100 -ReplicationFrequencyInMinutes 15
+Remove-ADReplicationSiteLink -Identity "DEFAULTIPSITELINK" -Confirm:$false

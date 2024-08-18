@@ -3,7 +3,6 @@
 #
 
 Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
-
 Import-Module ADDSDeployment
 
 $JoinPassword = ConvertTo-SecureString '${JOIN_PASSWORD}' -AsPlainText -Force
