@@ -16,6 +16,17 @@ variable "INGRESS_WITH_CIDR_BLOCKS" {
   default = []
 }
 
+variable "HOSTNAMES" {
+  type = map(string)
+  default = {
+    "MAIN_DC" = "DCPD01",
+    "MAIN_CC" = "CCPD01",
+    "MAIN_GI" = "GIPD01",
+    "DR_DC"   = "DCPD51",
+    "DR_CC"   = "CCPD51"
+  }
+}
+
 variable "DOMAIN_NAME" {
   type    = string
   default = "homelab.corp"

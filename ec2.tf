@@ -24,7 +24,7 @@ module "ec2-main-dc" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.6.1"
 
-  name          = "DCPD01.${var.DOMAIN_NAME}"
+  name          = "${var.HOSTNAMES.MAIN_DC}.${var.DOMAIN_NAME}"
   instance_type = "t3.medium"
   ami           = data.aws_ami.main-windows.id
 
@@ -32,7 +32,7 @@ module "ec2-main-dc" {
   disable_api_termination = true
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
-    HOSTNAME = "DCPD01",
+    HOSTNAME = var.HOSTNAMES.MAIN_DC,
     PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
@@ -58,7 +58,7 @@ module "ec2-main-cc" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.6.1"
 
-  name          = "CCPD01.${var.DOMAIN_NAME}"
+  name          = "${var.HOSTNAMES.MAIN_CC}.${var.DOMAIN_NAME}"
   instance_type = "t3.medium"
   ami           = data.aws_ami.main-windows.id
 
@@ -66,7 +66,7 @@ module "ec2-main-cc" {
   disable_api_termination = true
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
-    HOSTNAME = "CCPD01",
+    HOSTNAME = var.HOSTNAMES.MAIN_CC,
     PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
@@ -92,7 +92,7 @@ module "ec2-main-gi" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.6.1"
 
-  name          = "GIPD01.${var.DOMAIN_NAME}"
+  name          = "${var.HOSTNAMES.MAIN_GI}.${var.DOMAIN_NAME}"
   instance_type = "t3.medium"
   ami           = data.aws_ami.main-windows.id
 
@@ -100,7 +100,7 @@ module "ec2-main-gi" {
   disable_api_termination = true
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
-    HOSTNAME = "GIPD01",
+    HOSTNAME = var.HOSTNAMES.MAIN_GI,
     PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
@@ -125,7 +125,7 @@ module "ec2-dr-dc" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.6.1"
 
-  name          = "DCPD51.${var.DOMAIN_NAME}"
+  name          = "${var.HOSTNAMES.DR_DC}.${var.DOMAIN_NAME}"
   instance_type = "t3.medium"
   ami           = data.aws_ami.dr-windows.id
 
@@ -133,7 +133,7 @@ module "ec2-dr-dc" {
   disable_api_termination = true
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
-    HOSTNAME = "DCPD51",
+    HOSTNAME = var.HOSTNAMES.DR_DC,
     PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
@@ -159,7 +159,7 @@ module "ec2-dr-cc" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.6.1"
 
-  name          = "CCPD51.${var.DOMAIN_NAME}"
+  name          = "${var.HOSTNAMES.DR_CC}.${var.DOMAIN_NAME}"
   instance_type = "t3.medium"
   ami           = data.aws_ami.dr-windows.id
 
@@ -167,7 +167,7 @@ module "ec2-dr-cc" {
   disable_api_termination = true
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
-    HOSTNAME = "CCPD51",
+    HOSTNAME = var.HOSTNAMES.DR_CC,
     PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
