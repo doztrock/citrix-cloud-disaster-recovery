@@ -103,3 +103,15 @@ resource "local_file" "join-main-gi" {
     JOIN_PASSWORD       = var.ADMINISTRATOR_PASSWORD
   })
 }
+
+resource "local_file" "confCons" {
+  filename = "${path.module}/mRemoteNG/confCons.xml"
+  content = templatefile("${path.module}/mRemoteNG/confCons.xml.tpl", {
+    DOMAIN_NETBIOS_NAME = var.DOMAIN_NETBIOS_NAME,
+    USERNAME            = "Administrator",
+    DC01_PUBLIC_IP      = module.ec2-main-dc.public_ip,
+    CC01_PUBLIC_IP      = module.ec2-main-cc.public_ip,
+    DC51_PUBLIC_IP      = module.ec2-dr-dc.public_ip,
+    CC51_PUBLIC_IP      = module.ec2-dr-cc.public_ip
+  })
+}
