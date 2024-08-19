@@ -7,7 +7,7 @@ Set-TimeZone –Name "SA Pacific Standard Time"
 Set-NetFirewallProfile -Profile Domain, Public, Private -Enabled False
 
 # Set the password
-net user Administrator ${PASSWORD}
+net user ${USERNAME} ${PASSWORD}
 
 # Rename the computer
 Rename-Computer -NewName ${HOSTNAME} -Force

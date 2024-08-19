@@ -61,7 +61,7 @@ resource "aws_vpc_peering_connection" "main-dr" {
   provider    = aws.dr
   vpc_id      = module.vpc-dr.vpc_id
   peer_vpc_id = module.vpc-main.vpc_id
-  peer_region = "us-east-1"
+  peer_region = data.aws_region.main.name
   depends_on = [
     module.vpc-main, module.vpc-dr
   ]
