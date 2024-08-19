@@ -37,6 +37,11 @@ variable "DOMAIN_NETBIOS_NAME" {
   default = "HOMELAB"
 }
 
+variable "ADMINISTRATOR_USERNAME" {
+  type    = string
+  default = "Administrator"
+}
+
 variable "ADMINISTRATOR_PASSWORD" {
   type      = string
   sensitive = true

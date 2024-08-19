@@ -21,7 +21,7 @@ resource "local_file" "join-dr-dc" {
     SERVER_ADDRESS_2    = "",
     DOMAIN_NAME         = var.DOMAIN_NAME,
     DOMAIN_NETBIOS_NAME = var.DOMAIN_NETBIOS_NAME,
-    JOIN_USERNAME       = "Administrator",
+    JOIN_USERNAME       = var.ADMINISTRATOR_USERNAME,
     JOIN_PASSWORD       = var.ADMINISTRATOR_PASSWORD
   })
 }
@@ -32,7 +32,7 @@ resource "local_file" "deploy-dr-dc" {
     HOSTNAME            = "${var.HOSTNAMES.DR_DC}.${var.DOMAIN_NAME}",
     DOMAIN_NAME         = var.DOMAIN_NAME,
     DOMAIN_NETBIOS_NAME = var.DOMAIN_NETBIOS_NAME,
-    JOIN_USERNAME       = "Administrator",
+    JOIN_USERNAME       = var.ADMINISTRATOR_USERNAME,
     JOIN_PASSWORD       = var.ADMINISTRATOR_PASSWORD,
     DSRM_PASSWORD       = random_password.dsrm.result
   })
@@ -73,7 +73,7 @@ resource "local_file" "join-main-cc" {
     SERVER_ADDRESS_2    = module.ec2-dr-dc.private_ip,
     DOMAIN_NAME         = var.DOMAIN_NAME,
     DOMAIN_NETBIOS_NAME = var.DOMAIN_NETBIOS_NAME,
-    JOIN_USERNAME       = "Administrator",
+    JOIN_USERNAME       = var.ADMINISTRATOR_USERNAME,
     JOIN_PASSWORD       = var.ADMINISTRATOR_PASSWORD
   })
 }
@@ -86,7 +86,7 @@ resource "local_file" "join-dr-cc" {
     SERVER_ADDRESS_2    = module.ec2-main-dc.private_ip,
     DOMAIN_NAME         = var.DOMAIN_NAME,
     DOMAIN_NETBIOS_NAME = var.DOMAIN_NETBIOS_NAME,
-    JOIN_USERNAME       = "Administrator",
+    JOIN_USERNAME       = var.ADMINISTRATOR_USERNAME,
     JOIN_PASSWORD       = var.ADMINISTRATOR_PASSWORD
   })
 }
@@ -99,7 +99,7 @@ resource "local_file" "join-main-gi" {
     SERVER_ADDRESS_2    = module.ec2-dr-dc.private_ip,
     DOMAIN_NAME         = var.DOMAIN_NAME,
     DOMAIN_NETBIOS_NAME = var.DOMAIN_NETBIOS_NAME,
-    JOIN_USERNAME       = "Administrator",
+    JOIN_USERNAME       = var.ADMINISTRATOR_USERNAME,
     JOIN_PASSWORD       = var.ADMINISTRATOR_PASSWORD
   })
 }
@@ -109,7 +109,7 @@ resource "local_file" "confCons" {
   content = templatefile("${path.module}/mRemoteNG/template/confCons.xml.tpl", {
     DOMAIN_NAME         = var.DOMAIN_NAME,
     DOMAIN_NETBIOS_NAME = var.DOMAIN_NETBIOS_NAME,
-    USERNAME            = "Administrator",
+    USERNAME            = var.ADMINISTRATOR_USERNAME,
     MAIN_DC             = var.HOSTNAMES.MAIN_DC,
     MAIN_DC_PUBLIC_IP   = module.ec2-main-dc.public_ip,
     MAIN_CC             = var.HOSTNAMES.MAIN_CC,
