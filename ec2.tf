@@ -33,6 +33,7 @@ module "ec2-main-dc" {
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
     HOSTNAME = var.HOSTNAMES.MAIN_DC,
+    USERNAME = var.ADMINISTRATOR_USERNAME,
     PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
@@ -67,6 +68,7 @@ module "ec2-main-cc" {
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
     HOSTNAME = var.HOSTNAMES.MAIN_CC,
+    USERNAME = var.ADMINISTRATOR_USERNAME,
     PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
@@ -101,6 +103,7 @@ module "ec2-main-gi" {
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
     HOSTNAME = var.HOSTNAMES.MAIN_GI,
+    USERNAME = var.ADMINISTRATOR_USERNAME,
     PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
@@ -134,6 +137,7 @@ module "ec2-dr-dc" {
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
     HOSTNAME = var.HOSTNAMES.DR_DC,
+    USERNAME = var.ADMINISTRATOR_USERNAME,
     PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
@@ -168,6 +172,7 @@ module "ec2-dr-cc" {
 
   user_data = templatefile("${path.module}/script/userdata.ps1", {
     HOSTNAME = var.HOSTNAMES.DR_CC,
+    USERNAME = var.ADMINISTRATOR_USERNAME,
     PASSWORD = var.ADMINISTRATOR_PASSWORD
   })
   user_data_replace_on_change = true
