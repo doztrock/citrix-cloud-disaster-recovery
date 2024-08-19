@@ -59,11 +59,9 @@ resource "local_file" "set-dns-dc-dr" {
 }
 
 resource "local_file" "create-sites" {
-  filename = "${path.module}/script/5-create-sites.ps1"
-  content = templatefile("${path.module}/script/template/create-sites.tpl", {
-    HOSTNAME    = "DCPD01.${var.DOMAIN_NAME}",
-    MAIN_SUBNET = module.vpc-main.vpc_cidr_block,
-    DR_SUBNET   = module.vpc-dr.vpc_cidr_block
+  filename = "${path.module}/script/5-set-replication-time.ps1"
+  content = templatefile("${path.module}/script/template/set-replication-time.tpl", {
+    HOSTNAME = "DCPD01.${var.DOMAIN_NAME}"
   })
 }
 
