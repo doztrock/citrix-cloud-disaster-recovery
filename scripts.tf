@@ -106,7 +106,7 @@ resource "local_file" "join-main-gi" {
 
 resource "local_file" "confCons" {
   filename = "${path.module}/mRemoteNG/confCons.xml"
-  content = templatefile("${path.module}/mRemoteNG/confCons.xml.tpl", {
+  content = templatefile("${path.module}/mRemoteNG/template/confCons.xml.tpl", {
     DOMAIN_NETBIOS_NAME = var.DOMAIN_NETBIOS_NAME,
     USERNAME            = "Administrator",
     DC01_PUBLIC_IP      = module.ec2-main-dc.public_ip,
