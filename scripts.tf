@@ -104,6 +104,22 @@ resource "local_file" "join-main-gi" {
   })
 }
 
+resource "local_file" "download-main-cc" {
+  filename = "${path.module}/script/9-download-main-cc.ps1"
+  content = templatefile("${path.module}/script/template/download-cloud-connector.tpl", {
+    HOSTNAME    = "${var.HOSTNAMES.MAIN_CC}.${var.DOMAIN_NAME}",
+    CUSTOMER_ID = var.CITRIX_CUSTOMER_ID
+  })
+}
+
+resource "local_file" "download-dr-cc" {
+  filename = "${path.module}/script/10-download-dr-cc.ps1"
+  content = templatefile("${path.module}/script/template/download-cloud-connector.tpl", {
+    HOSTNAME    = "${var.HOSTNAMES.DR_CC}.${var.DOMAIN_NAME}",
+    CUSTOMER_ID = var.CITRIX_CUSTOMER_ID
+  })
+}
+
 resource "local_file" "confCons" {
   filename = "${path.module}/mRemoteNG/confCons.xml"
   content = templatefile("${path.module}/mRemoteNG/template/confCons.xml.tpl", {

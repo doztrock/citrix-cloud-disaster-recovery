@@ -4,6 +4,7 @@ variable "DR_AWS_ACCESS_KEY_ID" {
 }
 
 variable "DR_AWS_SECRET_ACCESS_KEY" {
-  type     = string
-  nullable = false
+  type      = string
+  nullable  = false
+  sensitive = true
 }
