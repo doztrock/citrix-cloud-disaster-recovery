@@ -1,3 +1,19 @@
+variable "CITRIX_CUSTOMER_ID" {
+  type     = string
+  nullable = false
+}
+
+variable "CITRIX_CLIENT_ID" {
+  type     = string
+  nullable = false
+}
+
+variable "CITRIX_CLIENT_SECRET" {
+  type      = string
+  nullable  = false
+  sensitive = true
+}
+
 variable "DOMAIN_NAME" {
   type    = string
   default = "homelab.corp"
