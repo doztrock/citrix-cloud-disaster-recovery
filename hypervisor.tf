@@ -1,6 +1,6 @@
 locals {
-  main-azs-private-subnets-cidr-blocks = zipmap(local.azs-main, module.vpc-main.private_subnets_cidr_blocks)
-  dr-azs-private-subnets-cidr-blocks   = zipmap(local.azs-dr, module.vpc-dr.private_subnets_cidr_blocks)
+  main-azs-private-subnets-cidr-blocks = var.ARE_CC_READY ? zipmap(local.azs-main, module.vpc-main.private_subnets_cidr_blocks) : {}
+  dr-azs-private-subnets-cidr-blocks   = var.ARE_CC_READY ? zipmap(local.azs-dr, module.vpc-dr.private_subnets_cidr_blocks) : {}
 }
 
 resource "citrix_aws_hypervisor" "main" {
