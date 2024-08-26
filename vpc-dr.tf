@@ -23,6 +23,10 @@ module "vpc-dr" {
   public_subnets  = [cidrsubnet(local.cidr-dr, 8, 1), cidrsubnet(local.cidr-dr, 8, 2)]
   private_subnets = [cidrsubnet(local.cidr-dr, 8, 101), cidrsubnet(local.cidr-dr, 8, 102)]
 
+  enable_nat_gateway     = true
+  single_nat_gateway     = true
+  one_nat_gateway_per_az = false
+
   enable_dns_hostnames    = true
   enable_dns_support      = true
   map_public_ip_on_launch = true
@@ -79,38 +83,7 @@ module "sg-dr-private" {
     }
   ]
 
-  egress_with_cidr_blocks = [
-    {
-      cidr_blocks = module.vpc-dr.vpc_cidr_block
-      rule        = "all-all"
-    },
-    {
-      cidr_blocks = module.vpc-main.vpc_cidr_block
-      rule        = "all-all"
-    }
-  ]
-
-}
-
-module "sg-dr-ssm" {
-
-  providers = {
-    aws = aws.dr
-  }
-
-  source  = "terraform-aws-modules/security-group/aws"
-  version = "5.1.2"
-
-  name        = "ssm"
-  description = "Allows access to AWS SSM"
-  vpc_id      = module.vpc-dr.vpc_id
-
-  ingress_with_cidr_blocks = [
-    {
-      cidr_blocks = module.vpc-dr.vpc_cidr_block
-      rule        = "https-443-tcp"
-    }
-  ]
+  egress_rules = ["all-all"]
 
 }
 
@@ -149,41 +122,22 @@ module "sg-dr-public" {
   description = "Allows inbound and outbound traffic to and from the internet"
   vpc_id      = module.vpc-dr.vpc_id
 
-  ingress_with_cidr_blocks = [for ingress in var.INGRESS_WITH_CIDR_BLOCKS : {
-    cidr_blocks = ingress.cidr_blocks
-    rule        = ingress.rule
-  }]
+  ingress_with_cidr_blocks = concat([
+    {
+      cidr_blocks = module.vpc-dr.vpc_cidr_block
+      rule        = "all-all"
+    },
+    {
+      cidr_blocks = module.vpc-main.vpc_cidr_block
+      rule        = "all-all"
+    }
+    ],
+    [for ingress in var.INGRESS_WITH_CIDR_BLOCKS : {
+      cidr_blocks = ingress.cidr_blocks
+      rule        = ingress.rule
+    }]
+  )
 
   egress_rules = ["all-all"]
 
-}
-
-resource "aws_vpc_endpoint" "dr-ssm" {
-  provider            = aws.dr
-  vpc_id              = module.vpc-dr.vpc_id
-  service_name        = "com.amazonaws.${data.aws_region.dr.name}.ssm"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = module.vpc-dr.private_subnets
-  security_group_ids  = [module.sg-dr-ssm.security_group_id]
-  private_dns_enabled = true
-}
-
-resource "aws_vpc_endpoint" "dr-ec2messages" {
-  provider            = aws.dr
-  vpc_id              = module.vpc-dr.vpc_id
-  service_name        = "com.amazonaws.${data.aws_region.dr.name}.ec2messages"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = module.vpc-dr.private_subnets
-  security_group_ids  = [module.sg-dr-ssm.security_group_id]
-  private_dns_enabled = true
-}
-
-resource "aws_vpc_endpoint" "dr-ssmmessages" {
-  provider            = aws.dr
-  vpc_id              = module.vpc-dr.vpc_id
-  service_name        = "com.amazonaws.${data.aws_region.dr.name}.ssmmessages"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = module.vpc-dr.private_subnets
-  security_group_ids  = [module.sg-dr-ssm.security_group_id]
-  private_dns_enabled = true
 }
