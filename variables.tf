@@ -52,3 +52,13 @@ variable "INGRESS_WITH_CIDR_BLOCKS" {
   }))
   default = []
 }
+
+variable "ARE_CC_READY" {
+  type    = bool
+  default = false
+}
+
+variable "IS_GI_READY" {
+  type    = bool
+  default = false
+}
