@@ -33,9 +33,8 @@ module "ec2-dr-dc" {
 
   subnet_id = element(module.vpc-dr.public_subnets, 0)
   vpc_security_group_ids = [
-    module.sg-dr-private.security_group_id,
-    module.sg-dr-ping.security_group_id,
-    module.sg-dr-public.security_group_id
+    module.sg-dr-public.security_group_id,
+    module.sg-dr-ping.security_group_id
   ]
 
 }
@@ -68,9 +67,8 @@ module "ec2-dr-cc" {
 
   subnet_id = element(module.vpc-dr.public_subnets, 1)
   vpc_security_group_ids = [
-    module.sg-dr-private.security_group_id,
-    module.sg-dr-ping.security_group_id,
-    module.sg-dr-public.security_group_id
+    module.sg-dr-public.security_group_id,
+    module.sg-dr-ping.security_group_id
   ]
 
 }
