@@ -1,9 +1,32 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.terraform.io/citrix/citrix" {
+  version     = "1.0.0"
+  constraints = "1.0.0"
+  hashes = [
+    "h1:ZpXM3+soDosUpjfYJ+wNtxDgWXiaf7AK7vJS0x39OtI=",
+    "zh:02ba888ee9ac034a7e161992ea068416cb89bd37815149f8966d9f265b69d79d",
+    "zh:311f08a7c7fadb161129cf1716689fa42ff048bb51daa53dfa3cb38194d54e6d",
+    "zh:375d9d4e2776dc2f0e9256cbabd15d35e0b3f2b479fa8a26791565e587bf9ccf",
+    "zh:4aa74b4d83501c8d7824c98cc378fafef2557619481a4ae809fd1f01a36de6c1",
+    "zh:4b7f2f32b1c1fc83976efd4b7e46d1478c7e23d0209e3060727ae4fd7ed78a55",
+    "zh:6485ef682270354914712650a00bf86d5fa866bf0e498ed00edf0d2498d2eff7",
+    "zh:858619d656c97dd0df2786a8088f0e82999e2085ba8e4a33624a71a860a5de78",
+    "zh:b0977628a4068474c31103ba0a466411c430ba8de9247abdd9397b081c7213df",
+    "zh:cb9c428084440177f8e2aa08a8c8e18ef7d9b8102ae92c21c59ad94641c67ef0",
+    "zh:df16df9253d95a9c6fa9e07e900ca61803f79ebc0dd5c14c00811390f4c15857",
+    "zh:e37dce0df15e7d5ca1d076bbf576e42cccb29cc6b01f51f96c036c9279adfd84",
+    "zh:e9badd9362304025b73d2309e1e98106d5dbc7ff1c314fbcf31dc2272d6ac9c9",
+    "zh:eea34a646831485e62a06e28d875eff990959a4fe0ca1f95a6b860e93c97404a",
+    "zh:f01a6b5b136b28d566e79f9d090baefd1405da7c7f122e693ab1aaf152aa5dd9",
+    "zh:f6057496ac45093be445ed8423dc9dfcdbb21e5cc6d6348dbe3a8d5641882f3f",
+  ]
+}
+
 provider "registry.terraform.io/hashicorp/aws" {
   version     = "5.63.0"
-  constraints = ">= 5.46.0, 5.63.0"
+  constraints = ">= 3.29.0, >= 4.66.0, >= 5.46.0, 5.63.0"
   hashes = [
     "h1:+BIGqFMm8TiejSq8LS2Ke1sGnWdrl5WVrFQ3TRyaUaQ=",
     "zh:21f3a6870dd80b8312b6aac28784b29a7c2cf072175f0de943f09bddbf14cad6",

@@ -7,6 +7,10 @@ terraform {
         aws.main, aws.dr
       ]
     }
+    citrix = {
+      source  = "citrix/citrix"
+      version = "1.0.0"
+    }
     random = {
       source  = "hashicorp/random"
       version = "3.6.2"
@@ -14,16 +18,10 @@ terraform {
   }
 }
 
-provider "aws" {
-  alias      = "main"
-  access_key = var.AWS_ACCESS_KEY_ID
-  secret_key = var.AWS_SECRET_ACCESS_KEY
-  region     = "us-east-1"
-}
-
-provider "aws" {
-  alias      = "dr"
-  access_key = var.AWS_ACCESS_KEY_ID
-  secret_key = var.AWS_SECRET_ACCESS_KEY
-  region     = "us-west-2"
+provider "citrix" {
+  cvad_config = {
+    customer_id   = var.CITRIX_CUSTOMER_ID
+    client_id     = var.CITRIX_CLIENT_ID
+    client_secret = var.CITRIX_CLIENT_SECRET
+  }
 }
