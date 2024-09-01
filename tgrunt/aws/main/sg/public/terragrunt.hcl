@@ -8,6 +8,9 @@ terraform {
 
 dependency "vpc" {
   config_path = "${get_terragrunt_dir()}/../../vpc"
+  mock_outputs = {
+    vpc_id = "vpc-01234567890abcdef"
+  }
 }
 
 inputs = {

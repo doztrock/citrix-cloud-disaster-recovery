@@ -8,10 +8,17 @@ terraform {
 
 dependency "vpc-dr" {
   config_path = "${get_terragrunt_dir()}/../../vpc"
+  mock_outputs = {
+    vpc_id         = "vpc-01234567890abcdef"
+    vpc_cidr_block = "10.0.0.0/8"
+  }
 }
 
 dependency "vpc-main" {
   config_path = "${get_terragrunt_dir()}/../../../main/vpc"
+  mock_outputs = {
+    vpc_cidr_block = "10.0.0.0/8"
+  }
 }
 
 inputs = {

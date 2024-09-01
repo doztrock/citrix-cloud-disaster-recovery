@@ -8,18 +8,30 @@ terraform {
 
 dependency "instance-profile" {
   config_path = "${get_terragrunt_dir()}/../../iam/instance-profile"
+  mock_outputs = {
+    name = "mock-instance-profile-name"
+  }
 }
 
 dependency "vpc" {
   config_path = "${get_terragrunt_dir()}/../../vpc"
+  mock_outputs = {
+    public_subnets = ["subnet-01234567890abcdef"]
+  }
 }
 
 dependency "sg-ping" {
   config_path = "${get_terragrunt_dir()}/../../sg/ping"
+  mock_outputs = {
+    security_group_id = "sg-0abcdef1234567890"
+  }
 }
 
 dependency "sg-public" {
   config_path = "${get_terragrunt_dir()}/../../sg/public"
+  mock_outputs = {
+    security_group_id = "sg-0abcdef1234567890"
+  }
 }
 
 locals {

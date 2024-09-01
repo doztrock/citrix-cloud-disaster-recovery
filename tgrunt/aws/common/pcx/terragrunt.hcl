@@ -8,10 +8,28 @@ terraform {
 
 dependency "accepter" {
   config_path = "${get_terragrunt_dir()}/../../main/vpc"
+  mock_outputs = {
+    AWS_ACCESS_KEY_ID       = "AKIAIOSFODNN7EXAMPLE"
+    AWS_SECRET_ACCESS_KEY   = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+    AWS_REGION              = "us-east-1"
+    vpc_id                  = "vpc-01234567890abcdef"
+    vpc_cidr_block          = "10.0.0.0/8"
+    private_route_table_ids = ["rtb-09ba434c1bEXAMPLE"]
+    public_route_table_ids  = ["rtb-09ba434c1bEXAMPLE"]
+  }
 }
 
 dependency "requester" {
   config_path = "${get_terragrunt_dir()}/../../dr/vpc"
+  mock_outputs = {
+    AWS_ACCESS_KEY_ID       = "AKIAIOSFODNN7EXAMPLE"
+    AWS_SECRET_ACCESS_KEY   = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+    AWS_REGION              = "us-east-1"
+    vpc_id                  = "vpc-01234567890abcdef"
+    vpc_cidr_block          = "10.0.0.0/8"
+    private_route_table_ids = ["rtb-09ba434c1bEXAMPLE"]
+    public_route_table_ids  = ["rtb-09ba434c1bEXAMPLE"]
+  }
 }
 
 inputs = {
