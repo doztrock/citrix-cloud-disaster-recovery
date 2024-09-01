@@ -28,12 +28,12 @@ inputs = {
   accepter_peer_vpc_id = dependency.accepter.outputs.vpc_id
   accepter_peer_region = dependency.accepter.outputs.AWS_REGION
 
-  accepter_public_route_table_ids  = dependency.accepter.outputs.public_route_table_ids
   accepter_private_route_table_ids = dependency.accepter.outputs.private_route_table_ids
+  accepter_public_route_table_ids  = dependency.accepter.outputs.public_route_table_ids
   accepter_vpc_cidr_block          = dependency.accepter.outputs.vpc_cidr_block
 
-  requester_public_route_table_ids  = dependency.requester.outputs.public_route_table_ids
   requester_private_route_table_ids = dependency.requester.outputs.private_route_table_ids
+  requester_public_route_table_ids  = dependency.requester.outputs.public_route_table_ids
   requester_vpc_cidr_block          = dependency.requester.outputs.vpc_cidr_block
 
 }
