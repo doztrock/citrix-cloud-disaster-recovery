@@ -1,3 +1,12 @@
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+resource "random_shuffle" "available" {
+  input        = data.aws_availability_zones.available.names
+  result_count = 2
+}
+
 module "vpc" {
 
   source  = "terraform-aws-modules/vpc/aws"
@@ -6,7 +15,7 @@ module "vpc" {
   name = var.name
   cidr = var.cidr
 
-  azs             = var.azs
+  azs             = [element(random_shuffle.available.result, 0), element(random_shuffle.available.result, 1)]
   public_subnets  = [cidrsubnet(var.cidr, 8, 1), cidrsubnet(var.cidr, 8, 2)]
   private_subnets = [cidrsubnet(var.cidr, 8, 101), cidrsubnet(var.cidr, 8, 102)]
 
