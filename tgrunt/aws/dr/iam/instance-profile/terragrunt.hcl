@@ -3,7 +3,7 @@ include {
 }
 
 terraform {
-  source = "${get_terragrunt_dir()}/../../terraform-modules/instance-profile"
+  source = "${get_terragrunt_dir()}/../../../terraform-modules/instance-profile"
 }
 
 inputs = {
