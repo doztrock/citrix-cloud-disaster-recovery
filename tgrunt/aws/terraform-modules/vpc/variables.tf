@@ -13,11 +13,6 @@ variable "AWS_REGION" {
   nullable = false
 }
 
-variable "azs" {
-  type     = list(string)
-  nullable = false
-}
-
 variable "cidr" {
   type     = string
   nullable = false

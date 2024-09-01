@@ -10,6 +10,5 @@ inputs = {
 
   name = "dr"
   cidr = "10.20.0.0/16"
-  azs  = ["us-west-2a", "us-west-2b"]
 
 }
