@@ -4,11 +4,11 @@ inputs = {
   DOMAIN_NETBIOS_NAME = "HL"
 
   HOSTNAMES = {
-    "MAIN_DC" = "DC01",
-    "MAIN_CC" = "CC01",
-    "MAIN_GI" = "GI01",
-    "DR_DC"   = "DC51",
-    "DR_CC"   = "CC51"
+    "MAIN_DC" = "DCPD01",
+    "MAIN_CC" = "CCPD01",
+    "MAIN_GI" = "GIPD01",
+    "DR_DC"   = "DCPD51",
+    "DR_CC"   = "CCPD51"
   }
 
 }
