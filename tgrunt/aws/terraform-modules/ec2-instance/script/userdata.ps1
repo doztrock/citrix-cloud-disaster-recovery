@@ -1,10 +1,7 @@
-<script>
+<powershell>
 
 # Assign a password to the specified user account
 net user ${USERNAME} ${PASSWORD}
-
-</script>
-<powershell>
 
 # Configure the system timezone to UTC -5 (SA Pacific Standard Time)
 Set-TimeZone –Name "SA Pacific Standard Time"
